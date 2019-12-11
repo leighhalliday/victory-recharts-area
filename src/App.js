@@ -28,7 +28,7 @@ const colors = {
 export default function App() {
   return (
     <>
-      <h1>Commits By Year</h1>
+      <h1>Repos By Year</h1>
 
       <h2>Victory</h2>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
