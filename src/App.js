@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   LabelList
 } from "recharts";
+import { ResponsiveLine } from "@nivo/line";
 
 const data = [
   { x: "2015", y: 6 },
@@ -20,7 +21,7 @@ const data = [
 ];
 
 const colors = {
-  teal: "#009688",
+  teal: "hsl(174, 100%, 29%)",
   blueGrey: "#607D8B",
   lightGrey: "#eee"
 };
@@ -31,39 +32,80 @@ export default function App() {
       <h1>Repos By Year</h1>
 
       <h2>Victory</h2>
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <VictoryChart theme={VictoryTheme.material} width={800} height={400}>
-          <VictoryArea
-            data={data}
-            labels={({ datum }) => datum.y}
-            style={{ data: { fill: colors.teal } }}
-          />
-        </VictoryChart>
-      </div>
+      <VictoryDemo />
 
       <h2>Recharts</h2>
-      <div style={{ maxWidth: "800px", margin: "0 auto", height: "400px" }}>
-        <ResponsiveContainer>
-          <AreaChart
-            data={data}
-            margin={{ top: 25, right: 25, bottom: 25, left: 0 }}
-          >
-            <XAxis dataKey="x" />
-            <YAxis dataKey="y" />
-            <Area
-              dataKey="y"
-              isAnimationActive={false}
-              name="Repos"
-              fill={colors.teal}
-              stroke={colors.blueGrey}
-            >
-              <LabelList dataKey="y" position="top" offset={10} />
-            </Area>
-            <CartesianGrid stroke={colors.lightGrey} strokeDasharray="5 5" />
-            <Tooltip />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+      <RechartsDemo />
+
+      <h2>Nivo</h2>
+      <NivoDemo />
     </>
+  );
+}
+
+function VictoryDemo() {
+  return (
+    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <VictoryChart theme={VictoryTheme.material} width={800} height={400}>
+        <VictoryArea
+          data={data}
+          labels={({ datum }) => datum.y}
+          style={{ data: { fill: colors.teal } }}
+        />
+      </VictoryChart>
+    </div>
+  );
+}
+
+function RechartsDemo() {
+  return (
+    <div style={{ maxWidth: "800px", margin: "0 auto", height: "400px" }}>
+      <ResponsiveContainer>
+        <AreaChart
+          data={data}
+          margin={{ top: 25, right: 25, bottom: 25, left: 0 }}
+        >
+          <XAxis dataKey="x" />
+          <YAxis dataKey="y" />
+          <Area
+            dataKey="y"
+            isAnimationActive={false}
+            name="Repos"
+            fill={colors.teal}
+            stroke={colors.blueGrey}
+          >
+            <LabelList dataKey="y" position="top" offset={10} />
+          </Area>
+          <CartesianGrid stroke={colors.lightGrey} strokeDasharray="5 5" />
+          <Tooltip />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function NivoDemo() {
+  return (
+    <div style={{ maxWidth: "800px", margin: "0 auto", height: "400px" }}>
+      <ResponsiveLine
+        data={[
+          {
+            id: "repos",
+            color: colors.teal,
+            data
+          }
+        ]}
+        margin={{ top: 25, right: 25, bottom: 25, left: 60 }}
+        xScale={{ type: "point" }}
+        yScale={{
+          type: "linear",
+          min: "auto",
+          max: "auto"
+        }}
+        colors={d => d.color}
+        enableArea={true}
+        useMesh={true}
+      />
+    </div>
   );
 }

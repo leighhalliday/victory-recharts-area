@@ -431,6 +431,6 @@ const countsByYearObject = repoYears.reduce(
 
 // convert object into array format victory wants
 export const countsByYear = Object.keys(countsByYearObject).map(year => ({
-  x: year,
+  x: year.toString(),
   y: countsByYearObject[year]
 }));
